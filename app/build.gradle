@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+    defaultConfig {
+        applicationId "com.innotechx.ndkaesdemo"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+            moduleName "aesUtils"
+            ldLibs "log"            //实现__android_log_print
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'carSlave'
+            keyPassword 'carSlave'
+            storeFile file('/Users/sunyuqin/git/android_studio/NdkDemo/CarSlave.keystore')
+            storePassword 'carSlave'
+        }
+    }
+
+    buildTypes {
+        debug {
+
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+}
